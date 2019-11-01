@@ -52,11 +52,14 @@ class Cell: UITableViewCell {
     private var model: Model? {
         didSet {
             label.text = model?.text
-            dropDown.isHidden = !(model?.isExpanded ?? false)
+            let isExpanded = !(model?.isExpanded ?? false)
+            dropDown.isHidden = isExpanded
+            labelContainerStackView.alignment = isExpanded ? .top : .fill
         }
     }
     
     @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var labelContainerStackView: UIStackView!
     @IBOutlet private weak var dropDown: UIStackView!
 }
 
