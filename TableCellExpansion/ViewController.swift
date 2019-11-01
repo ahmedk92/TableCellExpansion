@@ -51,9 +51,9 @@ class Cell: UITableViewCell {
     private var model: Model? {
         didSet {
             label.text = model?.text
-            let isExpanded = !(model?.isExpanded ?? false)
-            dropDown.isHidden = isExpanded
-            labelContainerStackView.alignment = isExpanded ? .top : .fill
+            let isExpanded = (model?.isExpanded ?? false)
+            dropDown.isHidden = !isExpanded
+            labelContainerStackView.alignment = isExpanded ? .fill : .top
         }
     }
     
