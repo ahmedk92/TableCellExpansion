@@ -37,6 +37,7 @@
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaD-PF-CK9">
                                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                    <gestureRecognizers/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -85,7 +86,6 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="SCD-3Y-Vgh"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="9RK-5Z-UDZ"/>
                                 </connections>
                             </tableView>
                         </subviews>

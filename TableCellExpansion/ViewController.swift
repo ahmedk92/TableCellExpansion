@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource {
 
     private lazy var data: [Model] = (0..<100).map {
         return Model(text: "Row \($0)", isExpanded: false)
@@ -24,18 +24,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.dataSource = { [unowned self] in
             return self.data[indexPath.row]
         }
+        cell.tapAction = { [unowned self] in
+            self.data[indexPath.row].isExpanded = !self.data[indexPath.row].isExpanded
+            
+            (tableView.cellForRow(at: indexPath) as! Cell).refresh()
+            
+            tableView.beginUpdates()
+            tableView.endUpdates()
+
+        }
         return cell
-    }
-    
-    // MARK: UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        data[indexPath.row].isExpanded = !data[indexPath.row].isExpanded
-        
-        (tableView.cellForRow(at: indexPath) as! Cell).refresh()
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
 }
 
@@ -49,6 +47,7 @@ class Cell: UITableViewCell {
             refresh()
         }
     }
+    var tapAction: (() -> Void)?
     private var model: Model? {
         didSet {
             label.text = model?.text
@@ -61,6 +60,23 @@ class Cell: UITableViewCell {
     @IBOutlet private weak var label: UILabel!
     @IBOutlet private weak var labelContainerStackView: UIStackView!
     @IBOutlet private weak var dropDown: UIStackView!
+    
+    @objc private func labelTapped(_ recognizer: UITapGestureRecognizer) {
+        tapAction?()
+    }
+    
+    private func addTapGestureRecognizer() {
+        label.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+        label.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    // MARK: Overrides
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        addTapGestureRecognizer()
+    }
 }
 
 
